@@ -7,13 +7,18 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [priceRange, setPriceRange] = useState("");
 
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axiosPublic.get(`/products?page=${currentPage}&limit=10&search=${searchTerm}`);
+        const response = await axiosPublic.get(
+          `/products?page=${currentPage}&limit=10&search=${searchTerm}&brand=${brand}&category=${category}&priceRange=${priceRange}`
+        );
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
       } catch (error) {
@@ -21,7 +26,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [axiosPublic, currentPage, searchTerm]);
+  }, [axiosPublic, currentPage, searchTerm, brand, category, priceRange]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -48,6 +53,42 @@ const Home = () => {
             Search
           </button>
         </div>
+      </div>
+
+      <div className="flex gap-4 my-6">
+        <select
+          className="p-2 border"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        >
+          <option value="">All Brands</option>
+          <option value="Brand1">Brand1</option>
+          <option value="Brand2">Brand2</option>
+          {/* Add more brand options here */}
+        </select>
+
+        <select
+          className="p-2 border"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Accessories">Accessories</option>
+          
+        </select>
+
+        <select
+          className="p-2 border"
+          value={priceRange}
+          onChange={(e) => setPriceRange(e.target.value)}
+        >
+          <option value="">All Prices</option>
+          <option value="0-50">$0 - $50</option>
+          <option value="50-100">$50 - $100</option>
+          <option value="100-1000">$100 - $1000</option>
+          {/* Add more price range options here */}
+        </select>
       </div>
 
       <div className="grid grid-cols-4 gap-3">
@@ -80,7 +121,7 @@ const Home = () => {
         >
           Previous page
         </button>
-        
+
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             key={page}
@@ -90,7 +131,7 @@ const Home = () => {
             {page}
           </button>
         ))}
-        
+
         <button
           className="btn"
           onClick={() => handlePageChange(currentPage + 1)}
