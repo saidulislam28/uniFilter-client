@@ -1,12 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/signUp.css"
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
 
 const SignIN = () => {
+
+const {signIn} = useContext(AuthContext);
+const navigate = useNavigate();
+
+  const handleSignIN = (e) => {
+    e.preventDefault();
+
+    const form = new FormData(e.currentTarget);
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        
+        navigate( "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    
+  };
+
+
+
   return (
-    <div className="flex justify-center">
+    <div className="min-h-[730px]">
+
+    <div className="flex justify-center ">
     <div className="login-container">
       <div className="heading">Sign In</div>
-      <form  className="form-section">
+      <form onClick={handleSignIN}  className="form-section">
         <input
           required=""
           className="input"
@@ -76,6 +106,7 @@ const SignIN = () => {
       </p>
     </div>
   </div>
+    </div>
   );
 };
 

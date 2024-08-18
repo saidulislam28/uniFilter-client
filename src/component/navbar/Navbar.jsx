@@ -1,6 +1,15 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Navbar = () => {
+
+const{ user, logOut } = useContext(AuthContext);
+
+const handleLogout = () =>{
+  logOut().then(console.log('logout successfull')).catch();
+}
+
   return (
     <div className="border">
       <div className="navbar max-w-6xl mx-auto justify-between">
@@ -22,6 +31,11 @@ const Navbar = () => {
               Search
             </button>
           </div>
+
+          {
+            user ? <div>
+              <button onClick={handleLogout} className="font-bold text-xl border p-3 rounded-lg border-yellow-400">LogOut</button>
+            </div> :
           <div className="flex items-center gap-4 ">
             <Link to="signIn"
               className="inline-flex cursor-pointer items-center text-base justify-center h-full md:w-[120px] gap-2 md:hover:border rounded-md transition-colors md:hover:bg-gray-50"
@@ -42,6 +56,7 @@ const Navbar = () => {
               <span className="sr-only">Sign in</span>
             </Link>
           </div>
+          }
           
         </div>
       </div>

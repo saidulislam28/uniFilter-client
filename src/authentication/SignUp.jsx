@@ -1,11 +1,54 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
+import { useContext } from "react";
 
 const SignUp = () => {
+
+  const { signUp, updateProfileinfo } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleSignUp = (e) =>{
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const name = form.get("name");
+    const email = form.get("email");
+    const password = form.get("password");
+    
+    signUp(email, password)
+    .then(result =>{
+      console.log('succcessfully registered')
+      console.log(result.user);
+      
+      updateProfileinfo(name)
+      .then(navigate('/'))
+      .catch(error => {
+       console.log('something went wrong')
+       console.log(error);
+      })
+
+    })
+    .catch(err =>{
+      console.log("something went wrong")
+      console.log(err);
+    })
+    console.log(name, email, typeof(password));
+    e.target.reset();
+    
+
+    
+
+
+
+  }
+
+
   return (
-    <div className="flex justify-center">
+    <div className="min-h-[730px]">
+      <div className="flex justify-center ">
       <div className="login-container max-w-xl">
         <div className="heading">Register </div>
-        <form className="form-section">
+        <form onSubmit={handleSignUp} className="form-section">
           <input
             required=""
             className="input"
@@ -14,13 +57,7 @@ const SignUp = () => {
             placeholder="Name"
           />
 
-          <input
-            required=""
-            className="input"
-            type="text"
-            name="photo"
-            placeholder="Photo URL"
-          />
+          
 
           <input
             required=""
@@ -65,6 +102,7 @@ const SignUp = () => {
           </Link>
         </p>
       </div>
+    </div>
     </div>
   );
 };
