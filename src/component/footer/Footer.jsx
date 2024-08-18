@@ -20,13 +20,13 @@ const Footer = () => {
 		</div>
 		<ul className="flex flex-wrap pl-3 space-x-4 sm:space-x-8">
 			<li>
-				<a rel="noopener noreferrer" href="#">Instagram</a>
+				<a rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100024676355421">Instagram</a>
 			</li>
 			<li>
-				<a rel="noopener noreferrer" href="#">Facebook</a>
+				<a rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100024676355421">Facebook</a>
 			</li>
 			<li>
-				<a rel="noopener noreferrer" href="#">Twitter</a>
+				<a rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100024676355421">Twitter</a>
 			</li>
 		</ul>
 	</div>
