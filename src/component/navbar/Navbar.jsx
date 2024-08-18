@@ -1,147 +1,52 @@
-import { useEffect, useState } from "react";
-import Banner from "../../component/banner/Banner";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState("");
-  const [priceRange, setPriceRange] = useState("");
-  const [sortOption, setSortOption] = useState(""); // For sorting
-
-  const axiosPublic = useAxiosPublic();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axiosPublic.get(
-          `/products?page=${currentPage}&limit=10&search=${searchTerm}&category=${category}&priceRange=${priceRange}&sort=${sortOption}`
-        );
-        setProducts(response.data.products);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
-  }, [axiosPublic, currentPage, searchTerm, category, priceRange, sortOption]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
+const Navbar = () => {
   return (
-    <div className="min-h-[730px]">
-      <Banner />
-
-      <div className="flex items-center justify-between">
-        <h5 className="text-4xl my-10">Products</h5>
-
-        <div className="flex overflow-hidden rounded-md border">
-          <div className="relative flex-1">
-            <input
-              className="p-3 pl-4 outline-none bg-black1"
-              placeholder="Search products"
-              autoComplete="off"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <button className="gap-2 p-2 px-5 text-lg font-medium text-white bg-black border">
-            Search
-          </button>
+    <div className="border">
+      <div className="navbar max-w-6xl mx-auto justify-between">
+        <div className="flex">
+          <Link to="/" className="btn btn-ghost text-2xl font-bold">UniFilter</Link>
         </div>
-      </div>
-
-      <div className="flex gap-4 my-6">
-        <select
-          className="p-2 border"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Accessories">Accessories</option>
-          {/* Add more category options here */}
-        </select>
-
-        <select
-          className="p-2 border"
-          value={priceRange}
-          onChange={(e) => setPriceRange(e.target.value)}
-        >
-          <option value="">All Prices</option>
-          <option value="0-50">$0 - $50</option>
-          <option value="50-100">$50 - $100</option>
-          <option value="100-1000">$100 - $1000</option>
-          {/* Add more price range options here */}
-        </select>
-
-        <select
-          className="p-2 border"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option value="">Sort By</option>
-          <option value="priceAsc">Price: Low to High</option>
-          <option value="priceDesc">Price: High to Low</option>
-          <option value="dateDesc">Date Added: Newest First</option>
-        </select>
-      </div>
-
-      <div className="grid grid-cols-4 gap-3">
-        {products.map((product) => (
-          <div
-            key={product._id}
-            className="card card-compact bg-base-100 shadow-xl my-5 border-t"
-          >
-            <figure>
-              <img src={product.productImage} alt="Image not Available" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{product.productName}</h2>
-              <p>{product.description}</p>
-              <p>Price: {product.price} $</p>
-              <p>Rating: {product.ratings}</p>
-              <div className="card-actions justify-end">
-                <button className="btn bg-gray-300">Buy Now</button>
-              </div>
+       
+        <div className="flex-none gap-2">
+          <div className="flex w-full overflow-hidden rounded-md border">
+            <div className="relative flex-1">
+              <input
+                className="block w-full p-3 pl-4 outline-none bg-black1"
+                placeholder="Search in UniFilter"
+                autoComplete="off"
+                
+              />
             </div>
+            <button className="gap-2 p-2 px-5 text-lg font-medium text-white bg-black border">
+              Search
+            </button>
           </div>
-        ))}
-      </div>
-
-      <div className="join flex items-center gap-3 max-w-xl mx-auto">
-        <button
-          className="btn"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous page
-        </button>
-
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            className={`join-item btn ${page === currentPage ? "btn-active" : ""}`}
-            onClick={() => handlePageChange(page)}
-          >
-            {page}
-          </button>
-        ))}
-
-        <button
-          className="btn"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next page
-        </button>
+          <div className="flex items-center gap-4 ">
+            <Link to="signIn"
+              className="inline-flex cursor-pointer items-center text-base justify-center h-full md:w-[120px] gap-2 md:hover:border rounded-md transition-colors md:hover:bg-gray-50"
+              
+            >
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                strokeWidth="0"
+                viewBox="0 0 448 512"
+                height="20"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"></path>
+              </svg>
+              <span className="hidden md:inline-block">Sign in</span>
+              <span className="sr-only">Sign in</span>
+            </Link>
+          </div>
+          
+        </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Navbar;

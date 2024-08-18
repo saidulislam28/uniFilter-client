@@ -9,6 +9,7 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
+  const [sortOption, setSortOption] = useState(""); // For sorting
 
   const axiosPublic = useAxiosPublic();
 
@@ -16,7 +17,7 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const response = await axiosPublic.get(
-          `/products?page=${currentPage}&limit=10&search=${searchTerm}&category=${category}&priceRange=${priceRange}`
+          `/products?page=${currentPage}&limit=10&search=${searchTerm}&category=${category}&priceRange=${priceRange}&sort=${sortOption}`
         );
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
@@ -25,7 +26,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [axiosPublic, currentPage, searchTerm, category, priceRange]);
+  }, [axiosPublic, currentPage, searchTerm, category, priceRange, sortOption]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -63,10 +64,7 @@ const Home = () => {
           <option value="">All Categories</option>
           <option value="Electronics">Electronics</option>
           <option value="Accessories">Accessories</option>
-          <option value="Home Appliances">Home Appliances</option>
-          <option value="Kitchen Appliances">Kitchen Appliances</option>
-          <option value="Office Supplies">Office Supplies</option>
-         
+          {/* Add more category options here */}
         </select>
 
         <select
@@ -77,8 +75,19 @@ const Home = () => {
           <option value="">All Prices</option>
           <option value="0-50">$0 - $50</option>
           <option value="50-100">$50 - $100</option>
-          <option value="200-1000">$200 - $1000</option>
+          <option value="100-1000">$100 - $1000</option>
           {/* Add more price range options here */}
+        </select>
+
+        <select
+          className="p-2 border"
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+        >
+          <option value="">Sort By</option>
+          <option value="priceAsc">Price: Low to High</option>
+          <option value="priceDesc">Price: High to Low</option>
+          <option value="dateDesc">Date Added: Newest First</option>
         </select>
       </div>
 
