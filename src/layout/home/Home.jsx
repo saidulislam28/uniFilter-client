@@ -64,7 +64,9 @@ const Home = () => {
           <option value="">All Categories</option>
           <option value="Electronics">Electronics</option>
           <option value="Accessories">Accessories</option>
-          {/* Add more category options here */}
+          <option value="Home Appliances">Home Appliances</option>
+          
+          
         </select>
 
         <select

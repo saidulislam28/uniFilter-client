@@ -17,7 +17,7 @@ const navigate = useNavigate();
     console.log(email, password);
 
     signIn(email, password)
-      .then((result) => {
+      .then(() => {
         
         navigate( "/");
       })
