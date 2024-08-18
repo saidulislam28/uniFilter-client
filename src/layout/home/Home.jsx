@@ -7,7 +7,6 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
 
@@ -17,7 +16,7 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const response = await axiosPublic.get(
-          `/products?page=${currentPage}&limit=10&search=${searchTerm}&brand=${brand}&category=${category}&priceRange=${priceRange}`
+          `/products?page=${currentPage}&limit=10&search=${searchTerm}&category=${category}&priceRange=${priceRange}`
         );
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
@@ -26,7 +25,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [axiosPublic, currentPage, searchTerm, brand, category, priceRange]);
+  }, [axiosPublic, currentPage, searchTerm, category, priceRange]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -58,24 +57,16 @@ const Home = () => {
       <div className="flex gap-4 my-6">
         <select
           className="p-2 border"
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        >
-          <option value="">All Brands</option>
-          <option value="Brand1">Brand1</option>
-          <option value="Brand2">Brand2</option>
-          {/* Add more brand options here */}
-        </select>
-
-        <select
-          className="p-2 border"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">All Categories</option>
           <option value="Electronics">Electronics</option>
           <option value="Accessories">Accessories</option>
-          
+          <option value="Home Appliances">Home Appliances</option>
+          <option value="Kitchen Appliances">Kitchen Appliances</option>
+          <option value="Office Supplies">Office Supplies</option>
+         
         </select>
 
         <select
@@ -86,7 +77,7 @@ const Home = () => {
           <option value="">All Prices</option>
           <option value="0-50">$0 - $50</option>
           <option value="50-100">$50 - $100</option>
-          <option value="100-1000">$100 - $1000</option>
+          <option value="200-1000">$200 - $1000</option>
           {/* Add more price range options here */}
         </select>
       </div>
