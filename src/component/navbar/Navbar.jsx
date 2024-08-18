@@ -5,11 +5,13 @@ const Navbar = () => {
     <div className="border">
       <div className="navbar max-w-6xl mx-auto justify-between">
         <div className="flex">
-          <a className="btn btn-ghost text-2xl font-bold">UniFilter</a>
+          <Link to="/" className="btn btn-ghost text-2xl font-bold">UniFilter</Link>
         </div>
         <div>
           <ul className="flex gap-5 font-semibold">
+            <Link to="/">
             <li>Home</li>
+            </Link>
             <li>Categories</li>
             <li>Filter</li>
           </ul>
@@ -21,7 +23,7 @@ const Navbar = () => {
                 className="block w-full p-3 pl-4 outline-none bg-black1"
                 placeholder="Search in UniFilter"
                 autoComplete="off"
-                value=""
+                
               />
             </div>
             <button className="gap-2 p-2 px-5 text-lg font-medium text-white bg-black border">
