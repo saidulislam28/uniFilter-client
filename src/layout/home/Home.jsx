@@ -33,16 +33,16 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-[730px]">
+    <div className="min-h-[730px] px-4 lg:px-16">
       <Banner />
 
-      <div className="flex items-center justify-between">
-        <h5 className="text-4xl my-10">Products</h5>
+      <div className="flex flex-col lg:flex-row items-center justify-between">
+        <h5 className="text-2xl lg:text-4xl my-6 lg:my-10">Products</h5>
 
-        <div className="flex overflow-hidden rounded-md border">
+        <div className="flex overflow-hidden rounded-md border w-full lg:w-auto">
           <div className="relative flex-1">
             <input
-              className="p-3 pl-4 outline-none bg-black1"
+              className="p-3 pl-4 outline-none bg-black1 w-full"
               placeholder="Search products"
               autoComplete="off"
               value={searchTerm}
@@ -55,9 +55,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex gap-4 my-6">
+      <div className="flex flex-col lg:flex-row gap-4 my-6">
         <select
-          className="p-2 border"
+          className="p-2 border w-full lg:w-auto"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
@@ -67,11 +67,10 @@ const Home = () => {
           <option value="Home Appliances">Home Appliances</option>
           <option value="Office Supplies">Office Supplies</option>
           <option value="Kitchen Appliances">Kitchen Appliances</option>
-          
         </select>
 
         <select
-          className="p-2 border"
+          className="p-2 border w-full lg:w-auto"
           value={priceRange}
           onChange={(e) => setPriceRange(e.target.value)}
         >
@@ -83,7 +82,7 @@ const Home = () => {
         </select>
 
         <select
-          className="p-2 border"
+          className="p-2 border w-full lg:w-auto"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
@@ -94,7 +93,7 @@ const Home = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {products.map((product) => (
           <div
             key={product._id}
@@ -104,45 +103,47 @@ const Home = () => {
               <img src={product.productImage} alt="Image not Available" />
             </figure>
             <div className="card-body">
-              <h2 className="card-title">{product.productName}</h2>
-              <p>{product.description}</p>
-              <p>Price: {product.price} $</p>
-              <p>Rating: {product.ratings}</p>
+              <h2 className="card-title text-lg lg:text-xl">{product.productName}</h2>
+              <p className="text-sm lg:text-base">{product.description}</p>
+              <p className="text-sm lg:text-base">Price: {product.price} $</p>
+              <p className="text-sm lg:text-base">Rating: {product.ratings}</p>
               <div className="card-actions justify-end">
-                <button className="btn bg-gray-300">Buy Now</button>
+                <button className="btn bg-gray-300 text-sm lg:text-base">Buy Now</button>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="join flex items-center gap-3 max-w-xl mx-auto">
-        <button
-          className="btn"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous page
-        </button>
+      <div className="join flex flex-col sm:flex-row items-center justify-center gap-3 max-w-xl mx-auto mt-6">
+  <button
+    className="btn btn-sm w-full sm:w-auto"
+    onClick={() => handlePageChange(currentPage - 1)}
+    disabled={currentPage === 1}
+  >
+    Previous page
+  </button>
 
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            className={`join-item btn ${page === currentPage ? "btn-active" : ""}`}
-            onClick={() => handlePageChange(page)}
-          >
-            {page}
-          </button>
-        ))}
+  <div className="flex flex-wrap gap-1">
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      <button
+        key={page}
+        className={`join-item btn btn-sm w-8 sm:w-auto ${page === currentPage ? "btn-active" : ""}`}
+        onClick={() => handlePageChange(page)}
+      >
+        {page}
+      </button>
+    ))}
+  </div>
 
-        <button
-          className="btn"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next page
-        </button>
-      </div>
+  <button
+    className="btn btn-sm w-full sm:w-auto"
+    onClick={() => handlePageChange(currentPage + 1)}
+    disabled={currentPage === totalPages}
+  >
+    Next page
+  </button>
+</div>
     </div>
   );
 };
